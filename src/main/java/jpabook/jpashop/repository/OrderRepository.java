@@ -24,9 +24,13 @@ public class OrderRepository {
         return order;
     }
 
+    /*
     public List<Order> findAll(OrderSearch orderSearch) {
         return em.createQuery("select o from Order o", Order.class).getResultList();
     }
+    */
+
+
 //
 //    public List<Order> findByName(String name) {
 //        return em.createQuery("select o from Order o where o.member.name = :name", Order.class)
