@@ -73,8 +73,20 @@ class OrderServiceTest {
      */
     @Test
     void cancelOrder() {
+        // given
         Member member = createMember("홍길동", new Address("서울", "강가", "123"));
         Item book = createBook("시골JPA", 10000, 10);
+
+        int orderCount = 2;
+        Long orderId = orderService.order(member.getId(), book.getId(), orderCount);
+
+        // when
+        orderService.cancelOrder(orderId);
+
+        // then
+        Order getOrder = orderRepository.findOne(orderId);
+        Assertions.assertEquals(OrderStatus.CANCEL, getOrder.getStatus());
+        Assertions.assertEquals(10, book.getStockQuantity());
     }
 
     /**

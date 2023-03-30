@@ -14,21 +14,25 @@ import java.util.List;
 public class OrderRepository {
     private final EntityManager em;
 
-    public Long save(Order order) {
+    public void save(Order order) {
         em.persist(order);
-        return order.getId();
     }
 
     public Order findOne(Long orderId) {
-        Order order = em.find(Order.class, orderId);
-        return order;
+        return em.find(Order.class, orderId);
     }
 
-    /*
+    // TODO: QueryDSL로 수정필요
     public List<Order> findAll(OrderSearch orderSearch) {
-        return em.createQuery("select o from Order o", Order.class).getResultList();
+        return em.createQuery("select o from Order o join o.member m" +
+                        " where o.status = :status " +
+                        " and m.name like :name", Order.class)
+                .setParameter("status", orderSearch.getOrderStatus())
+                .setParameter("name", orderSearch.getMemberName())
+                .setMaxResults(1000)
+                .getResultList();
+//        return em.createQuery("select o from Order o", Order.class).getResultList();
     }
-    */
 
 
 //
