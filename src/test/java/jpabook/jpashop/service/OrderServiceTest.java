@@ -73,7 +73,8 @@ class OrderServiceTest {
      */
     @Test
     void cancelOrder() {
-
+        Member member = createMember("홍길동", new Address("서울", "강가", "123"));
+        Item book = createBook("시골JPA", 10000, 10);
     }
 
     /**
