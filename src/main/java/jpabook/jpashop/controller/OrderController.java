@@ -2,6 +2,7 @@ package jpabook.jpashop.controller;
 
 import jakarta.validation.Valid;
 import jpabook.jpashop.domain.*;
+import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.service.ItemService;
 import jpabook.jpashop.service.MemberService;
@@ -25,6 +26,29 @@ public class OrderController {
     private final MemberService memberService;
     private final ItemService itemService;
 
+    private void createDummyData() {
+        Member member1 = new Member();
+        member1.setName("홍길동");
+        member1.setAddress(new Address("서울", "테헤란로1", "11111"));
+
+        Member member2 = new Member();
+        member2.setName("홍길동");
+        member2.setAddress(new Address("서울", "테헤란로1", "11111"));
+
+        memberService.join(member1);
+        memberService.join(member2);
+
+        Item item1 = new Book();
+        item1.setName("책1");
+        item1.setPrice(1000);
+        item1.setStockQuantity(100);
+
+        Item item1 = new Book();
+        item1.setName("책1");
+        item1.setPrice(1000);
+        item1.setStockQuantity(100);
+    }
+
     // 주문폼 보여주기
     @GetMapping("order")
     public String createForm(Model model) {
@@ -34,8 +58,7 @@ public class OrderController {
         model.addAttribute("members", members);
         model.addAttribute("items", items);
 
-        // 삭제예정
-        memberService
+        createDummyData();
 
         return "order/orderForm.html";
     }
