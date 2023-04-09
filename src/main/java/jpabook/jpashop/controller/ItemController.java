@@ -1,6 +1,8 @@
 package jpabook.jpashop.controller;
 
 import jakarta.validation.Valid;
+import jpabook.jpashop.domain.Address;
+import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.service.ItemService;
@@ -17,8 +19,26 @@ import java.util.List;
 public class ItemController {
     private final ItemService itemService;
 
+    private void createDummyData() {
+        Item item1 = new Book();
+        item1.setName("책1");
+        item1.setPrice(1000);
+        item1.setStockQuantity(100);
+
+        Item item2 = new Book();
+        item2.setName("책2");
+        item2.setPrice(2000);
+        item2.setStockQuantity(200);
+
+        itemService.saveItem(item1);
+        itemService.saveItem(item2);
+    }
+
     @GetMapping("/items/new")
     public String createForm(Model model) {
+        // TODO: 나중에 삭제
+        createDummyData();
+
         model.addAttribute("form", new BookForm());
         return "items/createItemForm";
     }

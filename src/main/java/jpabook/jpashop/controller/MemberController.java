@@ -3,6 +3,8 @@ package jpabook.jpashop.controller;
 import jakarta.validation.Valid;
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.domain.item.Book;
+import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,8 +20,24 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
+    private void createDummyData() {
+        Member member1 = new Member();
+        member1.setName("홍길동");
+        member1.setAddress(new Address("서울", "테헤란로1", "11111"));
+
+        Member member2 = new Member();
+        member2.setName("홍길동1");
+        member2.setAddress(new Address("경기", "산천로", "22222"));
+
+        memberService.join(member1);
+        memberService.join(member2);
+    }
+
     @GetMapping("/members/new")
     public String createForm(Model model) {
+        // TODO: 나중에 삭제
+        createDummyData();
+
         model.addAttribute("memberForm", new MemberForm());
         return "members/createMemberForm";
     }
